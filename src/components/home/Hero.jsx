@@ -26,7 +26,7 @@ const Hero = () => {
               <br />
               Fashion For
               <br />
-              Every Woman
+              Everyone
             </h1>
 
             <p className="mt-8 max-w-lg text-lg leading-8 text-gray-600">
@@ -66,7 +66,7 @@ const Hero = () => {
           >
             {/* Background Card */}
 
-            <div className="absolute inset-0 translate-x-6 translate-y-6 rounded-[40px] bg-[#F4C430]" />
+            <div className="absolute inset-0 translate-x-6 translate-y-6 rounded-[40px]]" />
 
             {/* Image */}
 
