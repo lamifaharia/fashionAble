@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import {
   FiHeart,
   FiShoppingBag,
@@ -13,197 +13,131 @@ import { useCart } from "../../context/CartContext";
 import { calculateItemCount } from "../../utils/cart";
 
 const links = [
-  {
-    name: "Home",
-    path: "/",
-  },
-  {
-    name: "Shop",
-    path: "/products",
-  },
-  {
-    name: "Collection",
-    path: "/products",
-  },
-  {
-    name: "Wishlist",
-    path: "/wishlist",
-  },
+  { name: "Home", path: "/" },
+  { name: "Shop", path: "/products" },
+  { name: "Wishlist", path: "/wishlist" },
 ];
 
 const Navbar = () => {
   const [mobileMenu, setMobileMenu] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const { items } = useCart();
+  const location = useLocation();
   const itemCount = calculateItemCount(items);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 30);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    if (mobileMenu) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [mobileMenu]);
 
   return (
     <>
-      {/* Announcement Bar */}
-
-      <div className="bg-[#111111] text-white text-center text-xs md:text-sm tracking-widest py-3 uppercase">
+      <div className="bg-[#111111] text-white text-center text-xs font-semibold tracking-[0.2em] py-2.5 uppercase">
         Free Shipping on Orders Over $100
       </div>
 
-      {/* Navbar */}
-
-      <header
-        className={`sticky top-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? "bg-white/90 backdrop-blur-xl shadow-lg"
-            : "bg-[#FAFAFA]"
-        }`}
-      >
+      <header className="sticky top-0 z-50 w-full bg-white shadow-md py-4">
         <Container>
-          <div className="flex h-20 items-center justify-between">
-
-            {/* Logo */}
-
-            <Link to="/">
-              <h1 className="text-3xl font-bold tracking-wide">
+          <div className="flex items-center justify-between">
+            
+            <Link to="/" className="group flex items-center gap-1.5">
+              <h1 className="text-3xl font-black tracking-tight text-[#111111]">
                 fashion
-                <span className="text-[#F4C430]">Able</span>
+                <span className="text-[#F4C430] ml-0.5">Able</span>
               </h1>
             </Link>
 
-            {/* Desktop Menu */}
-
-            <nav className="hidden lg:flex items-center gap-10">
-
-              {links.map((link) => (
-                <NavLink
-                  key={link.path}
-                  to={link.path}
-                  className={({ isActive }) =>
-                    `relative text-[15px] font-medium transition-all duration-300 after:absolute after:left-0 after:-bottom-2 after:h-[2px] after:bg-[#F4C430] after:transition-all after:duration-300 ${
-                      isActive
-                        ? "text-[#111111] after:w-full"
-                        : "text-gray-600 after:w-0 hover:text-[#111111] hover:after:w-full"
-                    }`
-                  }
-                >
-                  {link.name}
-                </NavLink>
-              ))}
-
+            <nav className="hidden lg:flex items-center gap-8">
+              {links.map((link) => {
+                const isActive = location.pathname === link.path;
+                return (
+                  <NavLink
+                    key={link.name}
+                    to={link.path}
+                    className={`relative text-sm font-semibold tracking-wide uppercase transition-colors duration-300 py-2 ${
+                      isActive ? "text-[#111111]" : "text-gray-500 hover:text-[#111111]"
+                    }`}
+                  >
+                    {link.name}
+                    {isActive && (
+                      <motion.div
+                        layoutId="activeUnderline"
+                        className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#F4C430]"
+                      />
+                    )}
+                  </NavLink>
+                );
+              })}
             </nav>
 
-            {/* Icons */}
-
-            <div className="hidden lg:flex items-center gap-6">
-
-              <button className="transition hover:text-[#F4C430]">
-                <FiSearch size={21} />
+            <div className="hidden lg:flex items-center gap-4">
+              <button className="text-[#111111] hover:text-[#F4C430] transition-colors">
+                <FiSearch size={22} />
               </button>
-
-              <Link
-                to="/wishlist"
-                className="transition hover:text-[#F4C430]"
-              >
-                <FiHeart size={21} />
+              <Link to="/wishlist" className="text-[#111111] hover:text-[#F4C430] transition-colors">
+                <FiHeart size={22} />
               </Link>
-
-              <Link
-                to="/cart"
-                className="relative transition hover:text-[#F4C430]"
-              >
-                <FiShoppingBag size={21} />
-
-                <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-[#F4C430] text-[11px] font-bold text-black">
-                  {itemCount}
-                </span>
+              <Link to="/cart" className="relative text-[#111111] hover:text-[#F4C430] transition-colors">
+                <FiShoppingBag size={22} />
+                {itemCount > 0 && (
+                  <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-[#F4C430] text-[10px] font-bold text-black">
+                    {itemCount}
+                  </span>
+                )}
               </Link>
-
             </div>
-
-            {/* Mobile Menu */}
 
             <button
               onClick={() => setMobileMenu(true)}
-              className="lg:hidden"
+              className="lg:hidden text-[#111111]"
             >
               <FiMenu size={28} />
             </button>
-
           </div>
         </Container>
       </header>
 
-      {/* Mobile Drawer */}
-
       <AnimatePresence>
-
         {mobileMenu && (
           <>
             <motion.div
               initial={{ opacity: 0 }}
-              animate={{ opacity: .5 }}
+              animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-40 bg-black"
+              className="fixed inset-0 z-50 bg-black/50"
               onClick={() => setMobileMenu(false)}
             />
-
             <motion.div
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              transition={{ duration: .35 }}
-              className="fixed right-0 top-0 z-50 h-screen w-80 bg-white px-8 py-8"
+              transition={{ type: "tween", duration: 0.3 }}
+              className="fixed right-0 top-0 bottom-0 z-50 h-screen w-80 bg-white p-8 shadow-2xl"
             >
-              <div className="flex justify-between items-center">
-
-                <h2 className="text-2xl font-bold">
-                  Menu
-                </h2>
-
+              <div className="flex justify-between items-center mb-10">
+                <h2 className="text-2xl font-bold">Menu</h2>
                 <button onClick={() => setMobileMenu(false)}>
                   <FiX size={28} />
                 </button>
-
               </div>
 
-              <div className="mt-14 flex flex-col gap-8">
-
+              <div className="flex flex-col gap-6">
                 {links.map((link) => (
                   <NavLink
-                    key={link.path}
+                    key={link.name}
                     to={link.path}
                     onClick={() => setMobileMenu(false)}
-                    className={({ isActive }) =>
-                      `text-lg ${
-                        isActive
-                          ? "text-[#F4C430]"
-                          : "text-gray-700"
-                      }`
-                    }
+                    className="text-lg font-medium text-gray-700 hover:text-[#F4C430]"
                   >
                     {link.name}
                   </NavLink>
                 ))}
-
-                <Link
-                  to="/cart"
-                  onClick={() => setMobileMenu(false)}
-                  className="text-lg text-gray-700"
-                >
-                  Cart
-                </Link>
-
               </div>
             </motion.div>
           </>
         )}
-
       </AnimatePresence>
     </>
   );
