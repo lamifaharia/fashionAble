@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { FiArrowRight } from "react-icons/fi";
-import heroImage from "../../assets/images/hero.png";
 import Container from "../layout/Container";
 
 const Hero = () => {
@@ -59,27 +58,27 @@ const Hero = () => {
           {/* Right */}
 
           <motion.div
-            initial={{ opacity: 0, scale: .9 }}
+            initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: .8 }}
+            transition={{ duration: 0.8 }}
             className="relative"
           >
             {/* Background Card */}
 
-            <div className="absolute inset-0 translate-x-6 translate-y-6 rounded-[40px]]" />
+            <div className="absolute inset-0 translate-x-6 translate-y-6 rounded-[40px] " />
 
             {/* Image */}
 
-            <div className="relative overflow-hidden rounded-[40px] bg-white shadow-2xl">
+            <div className="relative overflow-hidden rounded-[40px] bg-white shadow-2xl aspect-[4/5] lg:aspect-auto lg:h-[560px]">
 
               <motion.img
                 whileHover={{
                   scale: 1.04,
                 }}
                 transition={{
-                  duration: .5,
+                  duration: 0.5,
                 }}
-                src={heroImage}
+                src="/src/assets/images/hero.png"
                 alt="Fashion Collection"
                 className="h-full w-full object-cover"
               />
