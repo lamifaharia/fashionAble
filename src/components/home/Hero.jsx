@@ -78,7 +78,7 @@ const Hero = () => {
                 transition={{
                   duration: 0.5,
                 }}
-                src="/src/assets/images/hero.png"
+                src="/images/hero.png"
                 alt="Fashion Collection"
                 className="h-full w-full object-cover"
               />
