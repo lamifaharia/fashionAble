@@ -9,6 +9,8 @@ import {
 } from "react-icons/fi";
 import { AnimatePresence, motion } from "framer-motion";
 import Container from "./Container";
+import { useCart } from "../../context/CartContext";
+import { calculateItemCount } from "../../utils/cart";
 
 const links = [
   {
@@ -32,6 +34,8 @@ const links = [
 const Navbar = () => {
   const [mobileMenu, setMobileMenu] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { items } = useCart();
+  const itemCount = calculateItemCount(items);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -116,7 +120,7 @@ const Navbar = () => {
                 <FiShoppingBag size={21} />
 
                 <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-[#F4C430] text-[11px] font-bold text-black">
-                  0
+                  {itemCount}
                 </span>
               </Link>
 
