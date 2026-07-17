@@ -1,26 +1,26 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import panjabi from "../../assets/images/panjabi.webp";
+import cottonShari from '../../assets/images/Handloom Cotton Saree.webp'
+import kurti from '../../assets/images/Embroidered Kurti.jpg'
+import jacket from '../../assets/images/Denim Jacket.jpg'
 
 const categories = [
   {
     name: "Panjabi",
-    image:
-      "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=600&q=80&auto=format&fit=crop",
+    image: panjabi,
   },
   {
     name: "Saree",
-    image:
-      "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&q=80&auto=format&fit=crop",
+    image: cottonShari,
   },
   {
     name: "Kurti",
-    image:
-      "https://images.unsplash.com/photo-1551232864-3f0890e580d9?w=600&q=80&auto=format&fit=crop",
+    image: kurti,
   },
   {
     name: "Jackets",
-    image:
-      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&q=80&auto=format&fit=crop",
+    image: jacket,
   },
 ];
 
